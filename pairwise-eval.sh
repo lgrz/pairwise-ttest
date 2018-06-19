@@ -30,7 +30,7 @@ eval_err() {
     local qrels=$2
     local run=$3
     printf -v suffix "err%02d\n" $cutoff
-    $GDEVAL -k $cutoff $qrels $run \
+    $GDEVAL -j $ERR_MAXJ -k $cutoff $qrels $run \
         | sed -e 1d -e \$d \
         | awk -F, '{print $2, $4}' > ${run}.${suffix}
 }
@@ -49,15 +49,16 @@ if [ $# -ne 4 ]; then
     exit 1
 fi
 
-case "$1" in
+METRIC=$1; shift
+case "$METRIC" in
     ndcg)
-        EVALFUNC=eval_ndcg; shift
+        EVALFUNC=eval_ndcg
         ;;
     err)
-        EVALFUNC=eval_err; shift
+        EVALFUNC=eval_err
         ;;
     map)
-        EVALFUNC=eval_map; shift
+        EVALFUNC=eval_map
         ;;
     *)
         err "unknown metric $1"
@@ -66,6 +67,10 @@ esac
 
 cutoff_arg=$1; shift
 qrels_arg=$1; shift
+if [ -f $qrels_arg -a "$METRIC" = "err" ]; then
+    # ERR requires the maximum judgment to be specified
+    ERR_MAXJ=$(awk '{print $4}' $qrels_arg | sort -nu | tail -1)
+fi
 
 for i in $@; do
     $EVALFUNC $cutoff_arg $qrels_arg $i
