@@ -13,7 +13,7 @@ Scripts to perform pairwise t-test on TREC run files.
 [reshape2]: https://cran.r-project.org/web/packages/reshape2/index.html
 [gdeval]: https://github.com/lgrz/trec-web-2013
 [treceval]: https://trec.nist.gov/trec_eval
-[trecweb]: trec-web/trec-web-2013
+[trecweb]: https://github.com/trec-web/trec-web-2013
 
 ### Usage
 
