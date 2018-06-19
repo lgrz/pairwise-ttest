@@ -6,12 +6,14 @@ Scripts to perform pairwise t-test on TREC run files.
 
 * R
     * [reshape2][reshape2]
-* [gdeval.pl][gdeval]
+* [gdeval.pl][gdeval] - note this is a fork that adds options `-k <cutoff>` and
+  `-j <max judgment>` to the original [trec-web/trec-web-2013][trecweb]
 * [trec\_eval][treceval]
 
 [reshape2]: https://cran.r-project.org/web/packages/reshape2/index.html
 [gdeval]: https://github.com/lgrz/trec-web-2013
 [treceval]: https://trec.nist.gov/trec_eval
+[trecweb]: trec-web/trec-web-2013
 
 ### Usage
 
