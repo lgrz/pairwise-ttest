@@ -44,7 +44,7 @@ eval_map() {
         | awk '{print $2, $3}' > ${run}.${suffix}
 }
 
-if [ $# -ne 4 ]; then
+if [ $# -lt 4 ]; then
     usage
     exit 1
 fi
