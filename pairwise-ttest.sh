@@ -2,6 +2,8 @@
 
 # Perform pairwise t-test with Bonferroni correction
 
+SPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 TMPA=$(mktemp -p .)
 TMPB=$(mktemp -p .)
 HEADER="qid"
@@ -28,5 +30,5 @@ fi
 echo $HEADER > $TMPB
 cat $TMPA >> $TMPB
 
-Rscript pairwise.r $TMPB > result.txt
+Rscript $SPATH/pairwise.r $TMPB > result.txt
 rm $TMPA $TMPB
