@@ -21,6 +21,9 @@ There are two bash scripts to run. First run `pairwise-eval.sh` to evaluate the
 TREC run files. Then run `pairwise-ttest.sh` to compute statistical
 significance.
 
+The bash scripts assume that `gdeval.pl` and `trec_eval` can be found in your
+`PATH` environment.
+
 To compute a pairwise t-test of all run files in the `runs` directory for
 NDCG@10 using `foo.qrels` (which contains the relevance judgments), run
 the following:
