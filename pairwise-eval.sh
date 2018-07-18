@@ -4,6 +4,7 @@
 
 GDEVAL=gdeval.pl
 TRECEVAL=trec_eval
+RBPEVAL=rbp_eval
 
 usage() {
     echo "usage: $0 <metric> <cutoff> <qrels> file..." 1>&2
@@ -44,6 +45,15 @@ eval_map() {
         | awk '{print $2, $3}' > ${run}.${suffix}
 }
 
+eval_rbp() {
+    local persistence=$1
+    local qrels=$2
+    local run=$3
+    printf -v suffix "rbp%.2f\n" $persistence
+    $RBPEVAL -HWTq -p $persistence $qrels $run \
+        | awk '{print $4, $8}' > ${run}.${suffix}
+}
+
 if [ $# -lt 4 ]; then
     usage
     exit 1
@@ -59,6 +69,9 @@ case "$METRIC" in
         ;;
     map)
         EVALFUNC=eval_map
+        ;;
+    rbp)
+        EVALFUNC=eval_rbp
         ;;
     *)
         err "unknown metric $1"
