@@ -36,5 +36,5 @@ the following:
 cat result.txt
 ```
 
-The `pairwise-eval.sh` script can compute ERR, NDCG and MAP. `gdeval.pl` is
-used for ERR and NDCG, while `trec_eval` is used for MAP.
+The `pairwise-eval.sh` script can compute ERR, NDCG, RBP and MAP. `gdeval.pl`
+is used for ERR and NDCG, `rbp_eval` for RBP, and `trec_eval` is used for MAP.
