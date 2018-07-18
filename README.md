@@ -30,7 +30,7 @@ the following:
 
 ```
 ./pairwise-eval.sh ndcg 10 foo.qrels runs/*.run
-./pairwise-ttest.sh runs/*.run.ndcg10
+./pairwise-ttest.sh runs/*.run.ndcg10 > result.txt
 cat result.txt
 ```
 

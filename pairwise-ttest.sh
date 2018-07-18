@@ -30,5 +30,5 @@ fi
 echo $HEADER > $TMPB
 cat $TMPA >> $TMPB
 
-Rscript $SPATH/pairwise.r $TMPB > result.txt
+Rscript $SPATH/pairwise.r $TMPB
 rm $TMPA $TMPB
