@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Evaluate run files into common format for pairwise t-test.
 
@@ -31,7 +31,7 @@ eval_err() {
     local qrels=$2
     local run=$3
     printf -v suffix "err%02d\n" $cutoff
-    $GDEVAL -j $ERR_MAXJ -k $cutoff $qrels $run \
+    $GDEVAL -j $MAXJ -k $cutoff $qrels $run \
         | sed -e 1d -e \$d \
         | awk -F, '{print $2, $4}' > ${run}.${suffix}
 }
@@ -49,8 +49,9 @@ eval_rbp() {
     local persistence=$1
     local qrels=$2
     local run=$3
+    local scale=$(echo "scale=2; 1 / $MAXJ" | bc)
     printf -v suffix "rbp%.2f\n" $persistence
-    $RBPEVAL -HWTq -p $persistence $qrels $run \
+    $RBPEVAL -HWTq -f $scale -p $persistence $qrels $run \
         | awk '{print $4, $8}' > ${run}.${suffix}
 }
 
@@ -80,9 +81,12 @@ esac
 
 cutoff_arg=$1; shift
 qrels_arg=$1; shift
-if [ -f $qrels_arg -a "$METRIC" = "err" ]; then
-    # ERR requires the maximum judgment to be specified
-    ERR_MAXJ=$(awk '{print $4}' $qrels_arg | sort -nu | tail -1)
+if [ -f $qrels_arg ]; then
+    if [ "$METRIC" = "err" -o "$METRIC" = "rbp" ]; then
+        # ERR requires the maximum judgment to be specified, RBP requires the
+        # maximum judgment for graded evaluation.
+        MAXJ=$(awk '{print $4}' $qrels_arg | sort -nu | tail -1)
+    fi
 fi
 
 for i in $@; do
