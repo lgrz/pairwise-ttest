@@ -23,7 +23,8 @@ eval_ndcg() {
     printf -v suffix "ndcg%02d\n" $cutoff
     $GDEVAL -k $cutoff $qrels $run \
         | sed -e 1d -e \$d \
-        | awk -F, '{print $2, $3}' > ${run}.${suffix}
+        | awk -F, '{print $2, $3}' \
+        | sort -k1n > ${run}.${suffix}
 }
 
 eval_err() {
@@ -33,7 +34,8 @@ eval_err() {
     printf -v suffix "err%02d\n" $cutoff
     $GDEVAL -j $MAXJ -k $cutoff $qrels $run \
         | sed -e 1d -e \$d \
-        | awk -F, '{print $2, $4}' > ${run}.${suffix}
+        | awk -F, '{print $2, $4}' \
+        | sort -k1n > ${run}.${suffix}
 }
 
 eval_map() {
@@ -42,7 +44,8 @@ eval_map() {
     local run=$3
     printf -v suffix "map%04d\n" $cutoff
     $TRECEVAL -nq -m map_cut.$cutoff $qrels $run \
-        | awk '{print $2, $3}' > ${run}.${suffix}
+        | awk '{print $2, $3}' \
+        | sort -k1n > ${run}.${suffix}
 }
 
 eval_rbp() {
@@ -52,7 +55,8 @@ eval_rbp() {
     local scale=$(echo "scale=2; 1 / $MAXJ" | bc)
     printf -v suffix "rbp%.2f\n" $persistence
     $RBPEVAL -HWTq -f $scale -p $persistence $qrels $run \
-        | awk '{print $4, $8}' > ${run}.${suffix}
+        | awk '{print $4, $8}' \
+        | sort -k1n > ${run}.${suffix}
 }
 
 if [ $# -lt 4 ]; then
