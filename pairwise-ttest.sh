@@ -8,9 +8,11 @@ TMPA=$(mktemp -p .)
 TMPB=$(mktemp -p .)
 HEADER="qid"
 COUNTER=0
+SYSMAP="System mapping:"$'\n'
 
 for i in $@; do
-    name=$(basename $i)
+    name="Sys$COUNTER"
+    SYSMAP="$SYSMAP  $name $(basename $i)"$'\n'
     HEADER="$HEADER $name"
     if [ $COUNTER -eq 0 ]; then
         cat $i > $TMPA
@@ -30,5 +32,6 @@ fi
 echo $HEADER > $TMPB
 cat $TMPA >> $TMPB
 
+echo "$SYSMAP"
 Rscript $SPATH/pairwise.r $TMPB
 rm $TMPA $TMPB
