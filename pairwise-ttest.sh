@@ -42,7 +42,7 @@ for i in $@; do
         join $TMPA $i > $TMPB
     fi
     COUNTER=$((COUNTER + 1))
-    PREV=$(basename $i)
+    PREV=$i
 done
 
 # flip the modulus, the counter was incremented on the last iteration
