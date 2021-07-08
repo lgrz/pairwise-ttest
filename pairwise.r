@@ -6,4 +6,4 @@ if (!length(args)) {
 }
 t <- read.table(args[1], header=T)
 s <- melt(t, id.vars='qid', value.name='score')
-pairwise.t.test(s$score, factor(s$variable), p.adjust='bon', paired=T)
+pairwise.t.test(s$score, factor(s$variable), p.adjust='bonferroni', paired=T)
